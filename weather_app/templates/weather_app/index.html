@@ -1,0 +1,57 @@
+{% extends 'weather_app/base.html' %}
+{% block title %}
+    <title>Weather - Home</title>
+{% endblock title %}
+
+{% block content %}
+    <a id="brand" href=""><h1><i style="color: rgb(0, 162, 255);" class="fa-solid fa-cloud"></i> Weather App</h1></a>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="search-input">
+                    <input name="city-input" type="text" placeholder="Search by City . . ." autocomplete="off"
+                    {% if not city_errors %}
+                        value= "{{city_name}}"
+                    {% else %}
+                        value="{{city}}"
+                    {% endif %}
+                    >
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- MAIN CONTENT -->
+    <main>
+        {% if city_errors == False%}
+            <div class="main-content">
+                <div class="grid-sections">
+                    <h1>{{city_name}}, {{city_country}}</h1>
+                    
+                    <div class="main-temp">
+                        <h1><img src="https://openweathermap.org/img/wn/{{weather_icon_code}}.png" alt="">{{temperature}}°F</h1>
+                    </div>
+                    <small style="text-transform: capitalize;">{{city_description}}</small>
+                </div>
+    
+                <div class="grid-sections">
+                    <h2>Feels like: {{temperature_feeling}}°F</h2>
+                    
+                    <p><i class="fa-solid fa-wind"></i> {{city_wind}} mph</p>
+                    <p style="color: rgb(0, 162, 255);"><strong><i class="fas fa-arrow-down"></i> Low: {{temperature_min}}°F</strong></p>
+                    <p style="color: rgb(255, 114, 114);"><strong><i class="fas fa-arrow-up"></i> High: {{temperature_max}}°F</strong></p>
+                </div>
+            </div>
+
+        {% elif city_errors == True %}  
+            <div class="error-background">
+                <h2 style="color: rgb(255, 255, 255);">0 results found.</h2>
+            </div>
+        {% else %}
+            
+        {% endif %}
+    </main>
+{% endblock content %}
