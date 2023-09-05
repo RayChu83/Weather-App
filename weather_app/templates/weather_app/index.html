@@ -4,9 +4,8 @@
 {% endblock title %}
 
 {% block content %}
-    <a id="brand" href=""><h1><i style="color: rgb(0, 162, 255);" class="fa-solid fa-cloud"></i> Weather App</h1></a>
-    <form method="POST">
-        {% csrf_token %}
+    <a id="brand" href="{% url 'weather_app:index' %}"><h1><i style="color: rgb(0, 162, 255);" class="fa-solid fa-cloud"></i> Weather App</h1></a>
+    <form method="GET">
         <div class="search-container">
             <div class="search-box">
                 <div class="search-icon">

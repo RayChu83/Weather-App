@@ -29,26 +29,25 @@ class Index(TemplateView, WeatherMixin):
     template_name = "weather_app/index.html"
     API_KEY = settings.API_KEY
     UNSPLASH_KEY = settings.UNSPLASH_KEY
-
-    def get(self,request):
-        return render(request, self.template_name)
     
-    def post(self,request):
-        city = request.POST.get("city-input")
-        
-        image_url = f"https://api.unsplash.com/search/photos/?client_id={self.UNSPLASH_KEY}&page=1&per_page=1&query={city}"
-        weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.API_KEY}&units=imperial"
-
-        image_response = requests.get(image_url)
-        image_data = image_response.json()
-
-        weather_response = requests.get(weather_url)
-        weather_data = weather_response.json()
-
-        if "message" not in weather_data:
-            context = self.create_context(weather_data, image_data)
-        else:
-            context = {"city_errors" : True,
-                       "city": city}
+    def get(self,request):
+        city = request.GET.get("city-input")
+        if city:
             
-        return render(request, self.template_name, context)
+            image_url = f"https://api.unsplash.com/search/photos/?client_id={self.UNSPLASH_KEY}&page=1&per_page=1&query={city}"
+            weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.API_KEY}&units=imperial"
+
+            image_response = requests.get(image_url)
+            image_data = image_response.json()
+
+            weather_response = requests.get(weather_url)
+            weather_data = weather_response.json()
+
+            if "message" not in weather_data:
+                context = self.create_context(weather_data, image_data)
+            else:
+                context = {"city_errors" : True,
+                        "city": city}
+                
+            return render(request, self.template_name, context)
+        return render(request, self.template_name)
