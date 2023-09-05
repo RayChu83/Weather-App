@@ -136,5 +136,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-API_KEY = os.environ.get("API_KEY")
-UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY")
+# API_KEY = os.environ.get("API_KEY")
+# UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY")
+API_KEY = "101256148cc7ce3893e13967ec4e1095"
+UNSPLASH_KEY = "UhEz0u0BvokNrvpDXznsxMrkRR-QIa47jQacUBzoJH4"
